@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.potential.mapper.category.CategoryMapper">
+ 
+    <resultMap type="com.potential.model.Category" id="CategoryResultMap">
+        <result property="number" column="number" />
+        <result property="name" column="name" />
+        <result property="upperCategory" column="upper_category" />
+    </resultMap>
+
+    <!-- id의 경우에는 Mapper.java에 동일하게 사용해야된다. -->
+    <select id="getCategorys" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE upper_category=0
+    </select>
+    
+    <select id="getSubCategorys" parameterType="String" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE upper_category =#{categoryNo}
+    </select>
+    <!-- 
+    parameterType 에는 구문에 전달될 파라미터의 패키지 경로를 포함한 전체 클래명이나 별칭이 들어간다 
+    <insert id="insertCategory" parameterType="com.potential.model.category.Category" >
+        INSERT INTO category values(#{number},#{name},#{upperCategory})
+        ON DUPLICATE KEY UPDATE
+        	name=#{name},
+        	upper_category=#{upperCategory}
+    </insert> -->
+    
+ 
+</mapper>
